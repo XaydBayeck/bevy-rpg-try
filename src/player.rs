@@ -47,7 +47,7 @@ fn setup_player(
         SpriteSheetBundle {
             texture_atlas: texture_atlas_handle,
             sprite: TextureAtlasSprite::new(first),
-            transform: Transform::from_scale(Vec3::splat(6.0)),
+            // transform: Transform::from_scale(Vec3::splat(6.0)),
             ..default()
         },
         direction,
