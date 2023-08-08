@@ -4,3 +4,7 @@ runner = "wasm-server-runner"
 [target.x86_64-unknown-linux-gnu]
 linker = "clang"
 rustflags = ["-Clink-arg=-fuse-ld=mold", "-Zshare-generics=y"]
+
+[alias]
+rd = "run --all-features"
+br = "build --release --no-default-features"

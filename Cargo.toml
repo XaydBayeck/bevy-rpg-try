@@ -4,11 +4,13 @@ version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[features]
+default = ["dyn", "debug"]
+dyn = ["bevy/dynamic_linking"]
+debug = ["bevy_editor_pls"]
 
 [dependencies]
+bevy = { version = "0.11", features = [] }
+bevy_ecs_ldtk = { version = "0.8.0", features = ["atlas"] }
+bevy_editor_pls = {version = "0.4.0", optional = true}
 
-[target.'cfg(target_arch = "wasm32")'.dependencies]
-bevy = { version = "0.9.1", features = [] }
-
-[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-bevy = { version = "0.9.1", features = ["dynamic"] }
