@@ -1,8 +1,11 @@
-use crate::animate::{AnimationNode, AnimationTimer};
+use crate::{
+    animate::{AnimationNode, AnimationState, AnimationTimer},
+    state::{StateEvent, StatePlugin},
+};
 use bevy::prelude::*;
 
 use self::{
-    control::player_movement,
+    control::{player_movement_event, player_movement},
     states::{player_animate_indices_update, Action},
 };
 
@@ -17,8 +20,12 @@ impl Plugin for PlayerPlugin {
     }
 
     fn build(&self, app: &mut App) {
-        app.add_systems(Startup, setup_player)
-            .add_systems(Update, (player_animate_indices_update, player_movement));
+        app.add_event::<StateEvent<states::Direction>>()
+            .add_plugins(StatePlugin::<states::Direction>::default())
+            .add_event::<StateEvent<Action>>()
+            .add_plugins(StatePlugin::<Action>::default())
+            .add_systems(Startup, setup_player)
+            .add_systems(Update, (player_animate_indices_update, player_movement_event, player_movement));
 
         #[cfg(feature = "debug")]
         app.register_type::<states::Direction>()
@@ -47,11 +54,12 @@ fn setup_player(
         SpriteSheetBundle {
             texture_atlas: texture_atlas_handle,
             sprite: TextureAtlasSprite::new(first),
-            // transform: Transform::from_scale(Vec3::splat(6.0)),
+            transform: Transform::from_xyz(230.0, 230.0, 2.2),
             ..default()
         },
         direction,
         action,
+        AnimationState::Ready,
         animation_node,
         AnimationTimer(Timer::from_seconds(0.1, TimerMode::Once)),
         Player,

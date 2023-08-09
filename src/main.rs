@@ -6,6 +6,7 @@ use camera::CameraPlugin;
 use player::PlayerPlugin;
 use world_build::WorldBuildPlugin;
 
+mod state;
 mod animate;
 mod player;
 mod world_build;

@@ -1,24 +1,31 @@
+use crate::state;
 use bevy::prelude::*;
 
 use crate::animate::AnimationNode;
 
 use super::Player;
 
-#[derive(Component, Clone, Copy, Reflect)]
+#[derive(Default, Component, Clone, Copy, PartialEq, Reflect)]
 pub enum Direction {
+    #[default]
     Front,
     Back,
     Left,
     Right,
 }
 
-#[derive(Component, Clone, Copy, Reflect)]
+impl state::State for Direction {}
+
+#[derive(Default, Component, Clone, Copy, PartialEq, Reflect)]
 pub enum Action {
+    #[default]
     Idle,
     Walk,
     Attack,
     Dead,
 }
+
+impl state::State for Action {}
 
 pub struct State<'a>(pub &'a Direction, pub &'a Action);
 
@@ -55,7 +62,7 @@ pub fn player_animate_indices_update(
 ) {
     for (direction, action, mut node, mut sprite) in &mut query {
         node.set_indices(State(direction, action).indices());
-        node.set_repeate(matches!(action, Action::Idle | Action::Walk));
+        node.set_repeate(matches!(action, Action::Idle | Action::Walk | Action::Attack));
         sprite.flip_x = matches!(direction, Direction::Left);
     }
 }

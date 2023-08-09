@@ -1,7 +1,10 @@
 use bevy::prelude::*;
-use bevy_ecs_ldtk::{prelude::LdtkIntCellAppExt, LdtkPlugin, LdtkWorldBundle, LevelSelection};
+use bevy_ecs_ldtk::{
+    prelude::LdtkIntCellAppExt, EntityInstance, IntGridCell, LdtkPlugin, LdtkWorldBundle,
+    LevelSelection,
+};
 
-use self::bundles::{DirtRoadBundle, TerraceBundle};
+use self::bundles::TerraceBundle;
 
 mod bundles;
 mod components;
@@ -14,8 +17,11 @@ impl Plugin for WorldBuildPlugin {
         app.add_plugins(LdtkPlugin)
             .add_systems(Startup, load_ldtk)
             .insert_resource(LevelSelection::Index(0))
-            .register_ldtk_int_cell::<DirtRoadBundle>(1)
-            .register_ldtk_int_cell::<TerraceBundle>(2);
+            .register_ldtk_int_cell_for_layer::<TerraceBundle>("Place", 2);
+
+        #[cfg(feature = "debug")]
+        app.register_type::<EntityInstance>()
+            .register_type::<IntGridCell>();
     }
 }
 
