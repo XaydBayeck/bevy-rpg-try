@@ -27,21 +27,21 @@ pub enum AnimationState {
     Puase,
     Finished,
 }
-
-impl AnimationState {
-    pub fn is_ready(&self) -> bool {
-        matches!(self, Self::Ready)
-    }
-    pub fn is_playing(&self) -> bool {
-        matches!(self, Self::Playing)
-    }
-    pub fn is_puase(&self) -> bool {
-        matches!(self, Self::Puase)
-    }
-    pub fn is_finished(&self) -> bool {
-        matches!(self, Self::Finished)
-    }
-}
+//
+// impl AnimationState {
+//     pub fn is_ready(&self) -> bool {
+//         matches!(self, Self::Ready)
+//     }
+//     pub fn is_playing(&self) -> bool {
+//         matches!(self, Self::Playing)
+//     }
+//     pub fn is_puase(&self) -> bool {
+//         matches!(self, Self::Puase)
+//     }
+//     pub fn is_finished(&self) -> bool {
+//         matches!(self, Self::Finished)
+//     }
+// }
 
 impl State for AnimationState {}
 
